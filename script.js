@@ -45,6 +45,9 @@ const displayRounds = (rounds) => {
         }
         else {
             switch (round.roundName) {
+            case "Grand Final":
+                    roundName = "GF"
+                    break
             case "Qualifying Final":
                 roundName = "QF"
                 break
@@ -54,10 +57,11 @@ const displayRounds = (rounds) => {
             case "Preliminary Final":
                 roundName = "PF"
                 break
-            case "Grand Final":
-                roundName = "GF"
+            case "Elimination Final":
+                roundName = "EF"
                 break
             default:
+                console.log(round.roundName)
                 roundName = "Unkn"
             }
 
