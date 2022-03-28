@@ -35,7 +35,7 @@ const displayRounds = (rounds) => {
     roundsHeader.innerHTML = ""
     rounds.forEach((round, index) => {
         const newRound = document.createElement('li')
-        newRound.innerText = index.toString()
+        newRound.innerHTML = `<a href="#">${index}</a>`
         roundsHeader.appendChild(newRound)
     })
 }
