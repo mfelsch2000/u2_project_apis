@@ -26,6 +26,9 @@ Each percentage will be hyperlinked, to ...
 
 3rd Page - Games Views
 
+List the rounds available in that season. 
+For each round, navigator to the games in that round, highlighting who won.
+
 
 
 
