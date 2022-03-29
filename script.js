@@ -1,27 +1,65 @@
 const seasonNavigationButtons = document.querySelectorAll('.seasonNavBtn')
 const seasonHeader = document.getElementById('seasonHeader') 
 const roundsHeader = document.getElementById('rounds')
-const roundsLinks = document.getElementById('roundsLinks')
+const regularSeasonLinks = document.getElementById('regularSeasonLinks')
+const finalsLinks = document.getElementById('finalsLinks')
 const resultsHeader = document.getElementById("resultHeader")
 const results = document.getElementById("results")
+const currentSeason = 2022
+const firstSeason = 1895
 
 let rounds
+let selectedSeason 
+
+window.onload = function() {
+   selectedSeason = localStorage.getItem("selectedSeason")
+   if (!selectedSeason) {
+       selectedSeason = currentSeason
+   }
+   setSeason(selectedSeason)
+}
 
 seasonNavigationButtons.forEach(button => {
-    button.addEventListener('click', async (event) => {
-        let season = parseInt(seasonHeader.innerText)
-        console.log(season)
-        season = season + (event.target.id == 'previousSeasonBtn' ? -1 : +1)
-        seasonHeader.innerText = season.toString();
-        let response = await axios.get(`https://api.squiggle.com.au/?q=games;year=${season};source=1;format=json`)
-        let seasonGames = response.data.games;
-        console.log(seasonGames);
-        rounds = sortGamesIntoRounds(seasonGames)
-        clearResults()
-        displayRounds(rounds)
-
+    button.addEventListener('click', (event) => {
+        let season = selectedSeason
+        let changeSeason = false
+       // console.log(season)
+        if (event.target.id == 'previousSeasonBtn') {
+            if (season > firstSeason) {
+                season--
+                changeSeason = true
+            } 
+            else {
+                console.log("First season reached")
+            }
+        }
+        else {
+            if (season < currentSeason) {
+                season++
+                changeSeason = true
+            }
+            else {
+                console.log("Max season reached")
+            }
+        }
+        if (changeSeason) {
+            setSeason(season)
+        }
     })  
 });
+
+const setSeason = async (season) => {
+    selectedSeason = season
+    clearRounds()
+    seasonHeader.innerText = season.toString()
+    localStorage.setItem("selectedSeason", season)
+    let response = await axios.get(`https://api.squiggle.com.au/?q=games;year=${season};source=1;format=json`)
+    let seasonGames = response.data.games;
+    // console.log(seasonGames);
+    rounds = sortGamesIntoRounds(seasonGames)
+    displayRounds(rounds)
+}
+
 
 const sortGamesIntoRounds = (games) => {
     const rounds = []
@@ -36,58 +74,64 @@ const sortGamesIntoRounds = (games) => {
 }
 
 const displayRounds = (rounds) => {
-    roundsLinks.innerHTML = ""
+
     rounds.forEach((round, index) => {
         const newRound = document.createElement('li')
-        let roundName 
+        let isFinal = false
+        let roundName = ""
         if (round.roundName.indexOf("Round") > - 1) {
             roundName = round.roundName.substr(6)
         }
         else {
+            isFinal = true
             switch (round.roundName) {
             case "Grand Final":
-                    roundName = "GF"
+                    roundName = "Grand Final"
                     break
             case "Qualifying Final":
-                roundName = "QF"
+                roundName = "Qualifying Finals"
                 break
             case "Semi-Final":
-                roundName = "SF"
+                roundName = "Semi-Finals"
                 break
             case "Preliminary Final":
-                roundName = "PF"
+                roundName = "Preliminary Finals"
                 break
             case "Elimination Final":
-                roundName = "EF"
+                roundName = "Elimination Finals"
                 break
             default:
-                console.log(round.roundName)
-                roundName = "Unkn"
+                console.log("Unrecognised finals round: " & round.roundName)
+                roundName = round.roundName
             }
-
+            
         }
-        newRound.innerHTML = `<a id="${index} "href="#">${roundName}</a>`
-        roundsLinks.appendChild(newRound)
+//        newRound.innerHTML = `<a href="results.html" id=${index}>${roundName}</a>`
+        newRound.innerHTML = `<a href="#" id="${index}">${roundName}</a>`
+
+        if (isFinal) {
+            finalsLinks.appendChild(newRound)
+        }
+        else {
+            regularSeasonLinks.appendChild(newRound)
+        }
     })
 }
 
+regularSeasonLinks
 
-roundsLinks.addEventListener('click', (event) => {
-    displayResultsForRound(parseInt(event.target.id))
+regularSeasonLinks.addEventListener('click', (event) => {
+    localStorage.setItem("selectedRound", event.target.id)
+    window.location.href = "results.html"
 });
 
+finalsLinks.addEventListener('click', (event) => {
+    localStorage.setItem("selectedRound", event.target.id)
+    window.location.href = "results.html"
+});
 
-const displayResultsForRound = (roundId) => {
-    clearResults()
-    console.log(roundId)
-    round = rounds[roundId]
-    round.games.forEach((game) => {
-        const newResult = document.createElement('li')
-        newResult.innerText = game.hteam + " " + game.hscore + " v " + game.ascore + " " + game.ateam
-        results.appendChild(newResult)
-    })
-}
-
-const clearResults = () => {
-    results.innerHTML = ""
+const clearRounds = () => {
+    rounds = []
+    regularSeasonLinks.innerHTML = ""
+    finalsLinks.innerHTML = ""
 }
