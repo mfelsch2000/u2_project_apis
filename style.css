@@ -114,6 +114,11 @@ h3 {
 }
 
 .result{
-  text-align: center;
-  padding-right: 33vw
+  padding-left: 10vw
+}
+
+.matchDate{
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font-weight: 400; 
 }
