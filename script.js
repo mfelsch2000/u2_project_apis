@@ -117,7 +117,6 @@ const displayRounds = () => {
     })
 }
 
-
 roundsLinks.addEventListener('click', (event) => {
     let selectedRoundId = event.target.id
     gotoResults(selectedRoundId)
@@ -134,7 +133,6 @@ roundsLinks.addEventListener('blur', (event) => {
     console.log(event.target.classList)
     event.target.classList.remove("focus")
 });
-
 
 const gotoResults = (roundId) => {
     localStorage.setItem("selectedRound", roundId)
