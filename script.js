@@ -1,61 +1,61 @@
 const seasonNavigationButtons = document.querySelectorAll('.seasonNavBtn')
 const seasonHeader = document.getElementById('seasonHeader') 
-const roundsHeader = document.getElementById('rounds')
+const roundsLinks = document.getElementById('roundsLinks')
 const regularSeasonLinks = document.getElementById('regularSeasonLinks')
 const finalsLinks = document.getElementById('finalsLinks')
-const resultsHeader = document.getElementById("resultHeader")
-const results = document.getElementById("results")
+
 const currentSeason = 2022
-const firstSeason = 1895
+const firstSeason = 2000
 
 let rounds
 let selectedSeason 
 
 window.onload = function() {
+ //   console.log("Loading")
    selectedSeason = localStorage.getItem("selectedSeason")
    if (!selectedSeason) {
        selectedSeason = currentSeason
+       
    }
-   setSeason(selectedSeason)
+  // console.log("season " & selectedSeason)
+   displaySeason()
 }
 
 seasonNavigationButtons.forEach(button => {
     button.addEventListener('click', (event) => {
-        let season = selectedSeason
-        let changeSeason = false
+        let seasonChanged = false
        // console.log(season)
         if (event.target.id == 'previousSeasonBtn') {
-            if (season > firstSeason) {
-                season--
-                changeSeason = true
+            if (selectedSeason > firstSeason) {
+                selectedSeason--
+                seasonChanged = true
             } 
             else {
                 console.log("First season reached")
             }
         }
         else {
-            if (season < currentSeason) {
-                season++
-                changeSeason = true
+            if (selectedSeason < currentSeason) {
+                selectedSeason++
+                seasonChanged = true
             }
             else {
                 console.log("Max season reached")
             }
         }
-        if (changeSeason) {
-            setSeason(season)
+        if (seasonChanged) {
+            displaySeason()
         }
     })  
 });
 
-const setSeason = async (season) => {
-    selectedSeason = season
-    clearRounds()
-    seasonHeader.innerText = season.toString()
-    localStorage.setItem("selectedSeason", season)
-    let response = await axios.get(`https://api.squiggle.com.au/?q=games;year=${season};source=1;format=json`)
+const displaySeason = async () => {
+    seasonHeader.innerText = selectedSeason.toString()
+    localStorage.setItem("selectedSeason", selectedSeason)
+    let response = await axios.get(`https://api.squiggle.com.au/?q=games;year=${selectedSeason};source=1;format=json`)
     let seasonGames = response.data.games;
     // console.log(seasonGames);
+    clearRounds()
     sortGamesIntoRounds(seasonGames)
     displayRounds()
 }
@@ -117,18 +117,24 @@ const displayRounds = () => {
     })
 }
 
-regularSeasonLinks
 
-regularSeasonLinks.addEventListener('click', (event) => {
+roundsLinks.addEventListener('click', (event) => {
     let selectedRoundId = event.target.id
     gotoResults(selectedRoundId)
 });
 
-finalsLinks.addEventListener('click', (event) => {
-    let selectedRoundId = event.target.id
-    gotoResults(selectedRoundId)
-
+roundsLinks.addEventListener('focus', (event) => {
+    console.log("here")
+    console.log(event.target.classList)
+    event.target.classList.add("focus")
 });
+
+roundsLinks.addEventListener('blur', (event) => {
+    console.log("here 2")
+    console.log(event.target.classList)
+    event.target.classList.remove("focus")
+});
+
 
 const gotoResults = (roundId) => {
     localStorage.setItem("selectedRound", roundId)

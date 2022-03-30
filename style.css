@@ -27,7 +27,7 @@ body {
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none
 }
 
 .flex {
@@ -52,6 +52,7 @@ h1 {
 
 h2 {
   font-size: 2em;
+  margin-top: 0.5em;
   font-weight: 500;
 }
 
@@ -74,4 +75,45 @@ h3 {
 .pageNavBtn {
   font-size: 0.9em;
   color: #ce138f;
+}
+
+.winner{
+  font-weight: 600;
+}
+
+.draw {
+  font-weight: 600;
+  color: #066631
+}
+
+.score{
+  font-size: 1.0em;
+  font-weight: 600; 
+}
+
+.goals{
+  font-size: 0.9em;
+}
+
+.divider{
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  font-size: 0.8em;
+}
+
+.homeTeam{
+  padding-right: 0.6em;
+}
+
+.awayTeam{
+  padding-left: 0.6em;
+}
+
+.tribute{
+  font-size: 0.8em;
+}
+
+.result{
+  text-align: center;
+  padding-right: 33vw
 }
