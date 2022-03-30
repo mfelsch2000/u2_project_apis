@@ -1,14 +1,3 @@
-/*
-Project Name: BPF
-Client: GA FEWD36
-Author: Michael Felsch
-*/
-
-
-/******************************************
-/* SETUP
-/*******************************************/
-
 
 /******************************************
 /* BASE STYLES
@@ -119,6 +108,6 @@ h3 {
 
 .matchDate{
   margin-top: 0.8em;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.53m;
   font-weight: 400; 
 }
