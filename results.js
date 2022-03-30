@@ -33,7 +33,6 @@ const setRoundHeader = (season, roundName) => {
     roundHeader.innerText = (season + " " + roundName)
 }
 
-
 const sortRoundsByDate = () => {
   rounds[selectedRound].games.sort( function( a , b) {
     const aDate = Date.parse(a.date.slice(0, 10))
