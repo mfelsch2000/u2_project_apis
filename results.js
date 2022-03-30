@@ -16,9 +16,13 @@ window.onload = function() {
     displayResultsForRound(selectedSeason, selectedRound) 
 }
 
-const displayResultsForRound = async (season, roundId) => {
+const displayResultsForRound = (season, roundId) => {
     if (season && roundId) {
+        
         rounds[roundId].games.forEach((game, i) => {
+            if (i == 0) {
+                setRoundHeader(season, game.roundname)
+            }
             insertMatchDate(game)
             insertResult(game)
         })
