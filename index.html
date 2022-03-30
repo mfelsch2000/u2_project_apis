@@ -6,21 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script defer src="script.js"> </script>
-    <title>Document</title>
+    <title>AFL Match Results - Round Selector</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Sans:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Quicksand:300,400,500,700|Work+Sans:100,200,300,400,500,600,700,800,900">
+
 </head>
 <body>
     <header>
         <h1>AFL Match Results</h1>
-        <h2 id="seasonHeader">    
-        </h2>
+        <h2 id="seasonHeader">    </h2>
         <button class="seasonNavBtn" id="previousSeasonBtn">Previous</button>
         <button class="seasonNavBtn" id="nextSeasonBtn">Next</button>
       </header>
-      <div>
-        <h2 id="roundsHeader">Rounds</h2>
-        <ul id="regularSeasonLinks"></ul>  
-        <ul id="finalsLinks"></ul>            
-      </div>
+      <div id="rounds">
+        <div>
+          <h3 id="roundsHeader">Regular Season</h3>
+          <ul class="flex" id="regularSeasonLinks"></ul>  
+          <h3 id="roundsHeader">Finals</h3>
+          <ul class="flex" id="finalsLinks"></ul>            
+        </div>
+    </div>
     
 </body>
 </html>

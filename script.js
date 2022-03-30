@@ -56,13 +56,13 @@ const setSeason = async (season) => {
     let response = await axios.get(`https://api.squiggle.com.au/?q=games;year=${season};source=1;format=json`)
     let seasonGames = response.data.games;
     // console.log(seasonGames);
-    rounds = sortGamesIntoRounds(seasonGames)
-    displayRounds(rounds)
+    sortGamesIntoRounds(seasonGames)
+    displayRounds()
 }
 
 
 const sortGamesIntoRounds = (games) => {
-    const rounds = []
+    rounds = []
     games.forEach (game => {        
         if (game.round > rounds.length - 1) {
             rounds[parseInt(game.round)] = {roundName: game.roundname, games: []}
@@ -70,10 +70,9 @@ const sortGamesIntoRounds = (games) => {
         let round = rounds[parseInt(game.round)]
         round.games.push(game)
     })
-    return rounds
 }
 
-const displayRounds = (rounds) => {
+const displayRounds = () => {
 
     rounds.forEach((round, index) => {
         const newRound = document.createElement('li')
@@ -106,8 +105,8 @@ const displayRounds = (rounds) => {
             }
             
         }
-//        newRound.innerHTML = `<a href="results.html" id=${index}>${roundName}</a>`
-        newRound.innerHTML = `<a href="#" id="${index}">${roundName}</a>`
+
+        newRound.innerHTML = `<a href="#" class="roundName" id="${index}">${roundName}</a>`
 
         if (isFinal) {
             finalsLinks.appendChild(newRound)
@@ -121,14 +120,21 @@ const displayRounds = (rounds) => {
 regularSeasonLinks
 
 regularSeasonLinks.addEventListener('click', (event) => {
-    localStorage.setItem("selectedRound", event.target.id)
-    window.location.href = "results.html"
+    let selectedRoundId = event.target.id
+    gotoResults(selectedRoundId)
 });
 
 finalsLinks.addEventListener('click', (event) => {
-    localStorage.setItem("selectedRound", event.target.id)
-    window.location.href = "results.html"
+    let selectedRoundId = event.target.id
+    gotoResults(selectedRoundId)
+
 });
+
+const gotoResults = (roundId) => {
+    localStorage.setItem("selectedRound", roundId)
+    localStorage.setItem("rounds", JSON.stringify(rounds))
+    window.location.href = "results.html"
+}
 
 const clearRounds = () => {
     rounds = []

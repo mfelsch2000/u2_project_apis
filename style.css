@@ -1,0 +1,77 @@
+/*
+Project Name: BPF
+Client: GA FEWD36
+Author: Michael Felsch
+*/
+
+
+/******************************************
+/* SETUP
+/*******************************************/
+
+
+/******************************************
+/* BASE STYLES
+/*******************************************/
+
+body {
+  background-color: white;
+  font-size: 18px;
+  font-family: 'Quicksand', sans-serif;
+  /* font-family: 'Work Sans', sans-serif; */
+  /* font-family: 'Fira Sans', sans-serif; */
+  line-height: 1.4;
+  color: #1b078f;
+  font-weight: 400;
+  margin-left: 1.5em;
+}
+
+a {
+  text-decoration: none;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100vw;
+}
+
+.roundName {
+  padding: 0.5em;
+}
+
+.selectedRound {
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 3em;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 2em;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 1.25em;
+  font-weight: 500;
+  font-style: bold;
+  margin-top: 0.5em;
+}
+
+#rounds {
+  margin-top: 1.5em;
+}
+
+#results {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.pageNavBtn {
+  font-size: 0.9em;
+  color: #ce138f;
+}
